@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi amada Shemmi ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #f8f8ff;
+            opacity: 0.9;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 50px;
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            animation: gameGlow 3s ease-in-out infinite alternate;
+            box-shadow: 0 0 30px rgba(255, 107, 157, 0.2);
+        }
+
+        @keyframes gameGlow {
+            0% { box-shadow: 0 0 20px rgba(255, 107, 157, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(255, 107, 157, 0.6); }
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-header h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .game-header p {
+            color: #a8b3cf;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .code-editor {
+            background: #1a1f3a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #2d3561;
+            font-family: 'Fira Code', monospace;
+            position: relative;
+        }
+
+        .editor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2d3561;
+        }
+
+        .editor-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27ca3f; }
+
+        .editor-title {
+            color: #a8b3cf;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .code-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            min-height: 24px;
+        }
+
+        .line-number {
+            color: #4a5568;
+            font-size: 0.9rem;
+            width: 30px;
+            text-align: right;
+            margin-right: 20px;
+            user-select: none;
+        }
+
+        .code-content {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .function { color: #8be9fd; }
+        .variable { color: #bd93f9; }
+        .comment { color: #6272a4; font-style: italic; }
+
+        .code-blank {
+            background: rgba(255, 107, 157, 0.2);
+            border: 2px dashed #ff6b9d;
+            border-radius: 8px;
+            padding: 4px 12px;
+            margin: 0 4px;
+            min-width: 100px;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: blinkBorder 2s infinite;
+        }
+
+        .code-blank:hover {
+            background: rgba(255, 107, 157, 0.3);
+            transform: scale(1.05);
+        }
+
+        .code-blank.filled {
+            background: rgba(79, 172, 254, 0.3);
+            border-color: #4facfe;
+            animation: none;
+            color: #4facfe;
+            font-weight: 600;
+        }
+
+        .code-blank.selected {
+            background: rgba(255, 193, 7, 0.3);
+            border-color: #ffc107;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes blinkBorder {
+            0%, 50% { border-color: #ff6b9d; }
+            51%, 100% { border-color: rgba(255, 107, 157, 0.5); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .code-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .code-option {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            min-width: 120px;
+        }
+
+        .code-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .code-option:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .heart-output {
+            background: #0d1421;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #2d3561;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-display {
+            font-size: 4rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #4facfe);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            color: #a8b3cf;
+            font-size: 0.9rem;
+        }
+
+        /* INVITACIÓN SECRETA - ESTILOS CORREGIDOS */
+        .secret-invitation {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            pointer-events: none;
+            margin-top: 30px;
+        }
+
+        .secret-invitation.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .invitation-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f8ff 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 3px solid #ff6b9d;
+            animation: invitationFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes invitationFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .invitation-header {
+            margin-bottom: 25px;
+        }
+
+        .invitation-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .invitation-header h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #c44569;
+            margin: 0;
+        }
+
+        .invitation-body p {
+            color: #2c3e50;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .dinner-details {
+            background: rgba(255, 107, 157, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-icon {
+            font-size: 1.3rem;
+            margin-right: 12px;
+        }
+
+        .invitation-footer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c44569;
+            margin: 25px 0;
+        }
+
+        .accept-btn {
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .accept-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            font-size: 20px;
+            animation: confettiFall 3s linear;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .container { padding: 10px; }
+            .game-container { padding: 20px; }
+            .code-editor { padding: 15px; }
+            .code-options { flex-direction: column; align-items: center; }
+            .code-option { min-width: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Para mi querida Shemmi</h1>
+            <p>En nuestro aniversario, quiero que sepas todo lo que amo de ti</p>
+        </header>
+
+        <!-- Minijuego de Programación -->
+        <div class="game-container">
+            <div class="game-header">
+                <h2>💻 ¡Ayúdame a programar nuestro amor!</h2>
+                <p>Completa el código para crear un corazón especial y descubrir mi sorpresa 💖</p>
+            </div>
+            
+            <div class="code-editor">
+                <div class="editor-header">
+                    <div class="editor-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="editor-title">❤️ amor_para_shemmi.js</div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">1</div>
+                    <div class="code-content">
+                        <span class="keyword">function</span> <span class="function">crearCorazonPara</span>(<span class="variable">shemmi</span>) {
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">2</div>
+                    <div class="code-content">
+                        &nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">miAmor</span> = <span class="code-blank" onclick="selectBlank(0)" id="blank0">____</span>;
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">3</div>
+                    <div class="code-content">
+                        &nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">felicidad</span> = <span class="code-blank" onclick="selectBlank(1)" id="blank1">____</span>;
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">4</div>
+                    <div class="code-content">
+                        &nbsp;&nbsp;<span class="keyword">if</span> (<span class="variable">shemmi</span>.<span class="function">acepta</span>(<span class="variable">miAmor</span>)) {
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">5</div>
+                    <div class="code-content">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="code-blank" onclick="selectBlank(2)" id="blank2">____</span> + <span class="variable">felicidad</span>;
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">6</div>
+                    <div class="code-content">
+                        &nbsp;&nbsp;}
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">7</div>
+                    <div class="code-content">
+                        }
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">8</div>
+                    <div class="code-content">&nbsp;</div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">9</div>
+                    <div class="code-content">
+                        <span class="comment">// 💕 Ejecutar nuestro programa de amor</span>
+                    </div>
+                </div>
+                
+                <div class="code-line">
+                    <div class="line-number">10</div>
+                    <div class="code-content">
+                        <span class="function">crearCorazonPara</span>(<span class="code-blank" onclick="selectBlank(3)" id="blank3">____</span>);
+                    </div>
+                </div>
+                
+                <div class="heart-output">
+                    <div class="heart-display" id="heartDisplay" style="opacity: 0.3;">💙</div>
+                </div>
+            </div>
+            
+            <div class="code-options">
+                <button class="code-option" onclick="fillBlank('&quot;infinito&quot;')" id="option0">"infinito"</button>
+                <button class="code-option" onclick="fillBlank('true')" id="option1">true</button>
+                <button class="code-option" onclick="fillBlank('&quot;❤️&quot;')" id="option2">"❤️"</button>
+                <button class="code-option" onclick="fillBlank('&quot;Shemmi&quot;')" id="option3">"Shemmi"</button>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Completa el código: 0/4 espacios</div>
+            </div>
+            
+            <!-- Invitación secreta CORREGIDA -->
+            <div class="secret-invitation" id="secretInvitation">
+                <div class="invitation-card">
+                    <div class="invitation-header">
+                        <span class="invitation-icon">🍽️</span>
+                        <h2>¡PROGRAMA COMPLETADO! 🎉</h2>
+                    </div>
+                    <div class="invitation-body">
+                        <p><strong>¡Increíble trabajo, mi amor! 💻💕</strong></p>
+                        <p>Como recompensa, quiero invitarte a una cena especial este fin de semana. 🌹</p>
+                        <div class="dinner-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">📅</span>
+                                <span>Fecha: Este Viernes 20 de Junio de 2025</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">🕖</span>
+                                <span>Hora: 7:30 PM</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">📍</span>
+                                <span>Lugar: Biblioteca de España </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">💝</span>
+                                <span>Código de vestimenta: Como gustes </span>
+                            </div>
+                        </div>
+                        <p class="invitation-footer">Porque mi amor por ti es tan infinito como un bucle perfecto. 💕</p>
+                    </div>
+                    <button class="accept-btn" onclick="acceptInvitation()">¡Acepto la invitación! 💖</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBlank = -1;
+        let filledBlanks = [false, false, false, false];
+        let correctAnswers = ['"infinito"', "true", '"❤️"', '"Shemmi"'];
+        let currentAnswers = ["", "", "", ""];
+
+        function selectBlank(index) {
+            // Remover selección anterior
+            if (currentBlank >= 0) {
+                document.getElementById(`blank${currentBlank}`).classList.remove('selected');
+            }
+            
+            // Seleccionar nuevo blank
+            currentBlank = index;
+            document.getElementById(`blank${currentBlank}`).classList.add('selected');
+        }
+
+        function fillBlank(value) {
+            if (currentBlank === -1) {
+                alert('¡Primero selecciona un espacio en blanco! 💻');
+                return;
+            }
+
+            const blankElement = document.getElementById(`blank${currentBlank}`);
+            
+            // Llenar el espacio
+            blankElement.innerHTML = value; // Cambiado de textContent a innerHTML
+            blankElement.classList.remove('selected');
+            blankElement.classList.add('filled');
+            
+            // Marcar la opción como usada
+            const buttons = document.querySelectorAll('.code-option');
+            buttons.forEach(button => {
+                if (button.textContent === value.replace(/&quot;/g, '"')) { // Comparación corregida
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                }
+            });
+
+            // Guardar respuesta
+            currentAnswers[currentBlank] = value;
+            filledBlanks[currentBlank] = true;
+            
+            // Actualizar progreso
+            updateProgress();
+            
+            // Resetear selección
+            currentBlank = -1;
+        }
+
+        function updateProgress() {
+            const completed = filledBlanks.filter(x => x).length;
+            const percentage = (completed / 4) * 100;
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Completa el código: ${completed}/4 espacios`;
+            
+            // Actualizar corazón
+            const heartDisplay = document.getElementById('heartDisplay');
+            if (completed === 0) {
+                heartDisplay.textContent = '💙';
+                heartDisplay.style.opacity = '0.3';
+            } else if (completed === 1) {
+                heartDisplay.textContent = '💜';
+                heartDisplay.style.opacity = '0.5';
+            } else if (completed === 2) {
+                heartDisplay.textContent = '💖';
+                heartDisplay.style.opacity = '0.7';
+            } else if (completed === 3) {
+                heartDisplay.textContent = '❤️';
+                heartDisplay.style.opacity = '0.9';
+            } else if (completed === 4) {
+                // VERIFICACIÓN CORREGIDA
+                let allCorrect = true;
+                console.log('Verificando respuestas:');
+                console.log('Respuestas actuales:', currentAnswers);
+                console.log('Respuestas correctas:', correctAnswers);
+                
+                for (let i = 0; i < 4; i++) {
+                    if (currentAnswers[i] !== correctAnswers[i]) {
+                        console.log(`Error en posición ${i}: ${currentAnswers[i]} !== ${correctAnswers[i]}`);
+                        allCorrect = false;
+                        break;
+                    }
+                }
+                
+                if (allCorrect) {
+                    heartDisplay.textContent = '💕';
+                    heartDisplay.style.opacity = '1';
+                    heartDisplay.style.animation = 'heartbeat 1s infinite';
+                    
+                    console.log('¡Respuestas correctas! Mostrando invitación...');
+                    
+                    // MOSTRAR INVITACIÓN SECRETA - CORREGIDO
+                    setTimeout(() => {
+                        const invitation = document.getElementById('secretInvitation');
+                        invitation.classList.add('revealed');
+                        
+                        // Scroll suave hacia la invitación
+                        invitation.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }, 1500);
+                } else {
+                    heartDisplay.textContent = '💔';
+                    heartDisplay.style.opacity = '0.5';
+                    alert('¡Ups! Algunas respuestas no son correctas. ¡Inténtalo de nuevo! 💻💕');
+                    
+                    // Permitir reintentar
+                    resetGame();
+                }
+            }
+        }
+
+        function resetGame() {
+            // Resetear variables
+            currentBlank = -1;
+            filledBlanks = [false, false, false, false];
+            currentAnswers = ["", "", "", ""];
+            
+            // Resetear elementos visuales
+            for (let i = 0; i < 4; i++) {
+                const blank = document.getElementById(`blank${i}`);
+                blank.textContent = '____';
+                blank.classList.remove('filled', 'selected');
+            }
+            
+            // Rehabilitar botones
+            const buttons = document.querySelectorAll('.code-option');
+            buttons.forEach(button => {
+                button.disabled = false;
+                button.style.opacity = '1';
+            });
+            
+            // Resetear progreso
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressText').textContent = 'Completa el código: 0/4 espacios';
+            
+            // Resetear corazón
+            const heartDisplay = document.getElementById('heartDisplay');
+            heartDisplay.textContent = '💙';
+            heartDisplay.style.opacity = '0.3';
+            heartDisplay.style.animation = 'heartbeat 1.5s ease-in-out infinite';
+        }
+
+        function acceptInvitation() {
+            alert('¡Perfecto! 💖 Te amo mucho, Shemmi. ¡Será una noche increíble! 🌹✨');
+            
+            // Crear celebración
+            createCelebration();
+        }
+
+        function createCelebration() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            document.body.appendChild(celebration);
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = ['💖', '💕', '💗', '💝', '🌹', '✨'][Math.floor(Math.random() * 6)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    celebration.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                celebration.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
